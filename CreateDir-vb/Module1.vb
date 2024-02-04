@@ -51,6 +51,7 @@ Module Module1
 
         'キーの読み込み
         Try
+            'キーが存在しない状態でデバッグあり開始を実行するとエラーになる
             overwrite_warning = JObject("Overwrite_Warning").ToString()
             id = JObject("ID").ToString()
             name = JObject("Name").ToString()
