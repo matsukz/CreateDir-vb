@@ -142,7 +142,7 @@ Module Module1
         Process.Start(dir)
         Process.Start("notepad.exe", dir & "\取り組んで感じたこと")
 
-        If Not File.Exists(dir & "\取り組んで感じたこと") Then
+        If Not File.Exists(dir & "\取り組んで感じたこと.txt") Then
             WriteLine("エラー：正常に完了できませんでした")
         End If
 
