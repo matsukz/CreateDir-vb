@@ -5,7 +5,6 @@ Imports Newtonsoft.Json.Linq
 Module Module1
 
     Sub Main()
-        'やること 各種情報を読み込む
 
         '設定ファイル関係
         Dim Config_Path, JsonString As String
@@ -68,24 +67,17 @@ Module Module1
             Environment.Exit(1)
         End Try
 
-        Debug.Print(default_dir)
-        Debug.Print(choice_dir)
-        Debug.Print(id)
-        Debug.Print(name)
-        Debug.Print(overwrite_warning)
-
         '出力先ディレクトリの決定
         If My.Computer.FileSystem.DirectoryExists(choice_dir) Then
             dir = choice_dir
         Else
             dir = default_dir
         End If
-        dir = dir & "\" & id & " " & name & " <課題名>"
-        msg = "作成されるフォルダのパスは「" & dir & "」です！"
+        dir = dir & "\" & id & " " & name
+        msg = "作成されるフォルダのパスは「" & dir & "課題名」です！"
 
         '#を出力する数をカウントする(全角=2)
         number_of_sharps = Text.Encoding.GetEncoding("Shift_JIS").GetByteCount(msg)
-        Debug.Print(number_of_sharps)
 
         Dim i, j As Integer
         msg = ""
@@ -98,16 +90,61 @@ Module Module1
 
         WriteLine(msg)
         WriteLine("設定ファイルのロードに成功しました！")
+        WriteLine("課題番号を入力してください。")
+        WriteLine("宿題課題の場合は番号の前にsを入れてください。例「s00」")
 
-        WriteLine("作成されるフォルダのパスは「" & dir & "」です！")
+        WriteLine("作成されるフォルダのパスは「" & dir & " 課題名」です！")
         For i = 0 To number_of_sharps + 8
             Write("#")
         Next i
         WriteLine()
 
-        Write("課題名 >> ") : kadai = ReadLine() : Debug.Print(kadai)
+        '適切なフォルダ名になるまでループ
+        Dim check_dir_name As Boolean = True
+        While check_dir_name
 
-        Read()
+            Write("課題番号 >> ") : kadai = ReadLine()
+
+            If kadai = "" Then
+                WriteLine("課題番号が確認できません")
+            ElseIf kadai.Contains("s") Then
+                kadai = kadai.Remove(0, 1)
+                If kadai = "" Then
+                    WriteLine("課題番号が確認できません")
+                Else
+                    kadai = "宿題課題 " & kadai
+                    check_dir_name = False
+                End If
+            Else
+                kadai = "課題 " & kadai
+                check_dir_name = False
+            End If
+
+            WriteLine()
+
+        End While
+
+        '出力するパスを決定
+        dir = dir & " " & kadai
+
+        'フォルダが存在するかの確認(overwrite_warningが有効なときのみ)
+        If overwrite_warning = True Then
+            If Directory.Exists(dir) Then
+                WriteLine("フォルダが存在するため続行できません")
+                Read()
+                Environment.Exit(1)
+            End If
+        End If
+
+        'フォルダを作成する
+        Directory.CreateDirectory(dir)
+        File.Create(dir & "\取り組んで感じたこと.txt")
+        Process.Start(dir)
+        Process.Start("notepad.exe", dir & "\取り組んで感じたこと")
+
+        If Not File.Exists(dir & "\取り組んで感じたこと.txt") Then
+            WriteLine("エラー：正常に完了できませんでした")
+        End If
 
     End Sub
 
