@@ -26,8 +26,3 @@
     |Overwrite_Warning|真偽|trueの場合、フォルダが上書きされることを防止します|
 
 3. `CreateDir-vb.exe`を実行する
-
-## 画像利用
-アイコンに利用させて頂きました
-* [TXTファイルのシルエットアイコンイラスト](https://www.silhouette-illust.com/illust/15372)（Silhouette Illust様）
-* [フォルダのアイコンのイラスト【フリー素材あそび】](https://commons.nicovideo.jp/material/nc269594)（ニコニ・コモンズ様）
