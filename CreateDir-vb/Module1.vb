@@ -137,14 +137,26 @@ Module Module1
         End If
 
         'フォルダを作成する
-        Directory.CreateDirectory(dir)
-        File.Create(dir & "\取り組んで感じたこと.txt")
-        Process.Start(dir)
-        Process.Start("notepad.exe", dir & "\取り組んで感じたこと")
+        Try
+            Directory.CreateDirectory(dir)
+            File.Create(dir & "\取り組んで感じたこと.txt")
+            Process.Start(dir)
+            Process.Start("notepad.exe", dir & "\取り組んで感じたこと")
+        Catch ex As Exception
+            WriteLine("フォルダの作成に失敗しました")
+            WriteLine(ex.Message)
+            Read()
+            Environment.Exit(1)
+        End Try
 
+        'フォルダが作成できたことをチェックする
         If Not File.Exists(dir & "\取り組んで感じたこと.txt") Then
-            WriteLine("エラー：正常に完了できませんでした")
+            WriteLine("正常に完了できませんでした")
+            Read()
+            Environment.Exit(1)
         End If
+
+        Environment.Exit(0)
 
     End Sub
 
