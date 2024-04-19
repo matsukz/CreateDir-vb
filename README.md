@@ -26,5 +26,3 @@
     |Overwrite_Warning|真偽|trueの場合、フォルダが上書きされることを防止します|
 
 3. `CreateDir-vb.exe`を実行する
-
-おわり
